@@ -20,27 +20,13 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for t
 
 ## Prerequisites
 
-- Python 3.10+
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) (recommended) or pip
 - A ReelFarm account on the **Growth**, **Scale**, or **Enterprise** plan
 - A ReelFarm API key — get yours from [Dashboard → Settings → API Keys](https://reel.farm/dashboard)
 
 ## Quick Start
 
-Pick your MCP client below. Each section has a complete, copy-paste config. Replace `rf_your_api_key_here` with your actual API key.
-
----
-
-### Claude Desktop
-
-Open **Claude** → **Settings** → **Developer** → **Edit Config** to open the config file:
-
-| OS | Config path |
-|---|---|
-| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
-
-Add `"reelfarm"` inside the `"mcpServers"` object:
+Add this to your MCP client's config file (replace `rf_your_api_key_here` with your actual key):
 
 ```json
 {
@@ -56,32 +42,32 @@ Add `"reelfarm"` inside the `"mcpServers"` object:
 }
 ```
 
-Restart Claude Desktop. You should see a hammer icon in the chat input indicating the tools are loaded.
+That's it. The config is the same for every client — the only difference is where the file lives.
 
-<details>
-<summary>Using a local clone instead of the published package</summary>
+### Config file locations
 
-```json
-{
-  "mcpServers": {
-    "reelfarm": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--directory", "/absolute/path/to/reelfarm-mcp",
-        "reelfarm-mcp"
-      ],
-      "env": {
-        "REELFARM_API_KEY": "rf_your_api_key_here"
-      }
-    }
-  }
-}
-```
+| Client | Config file | How to open |
+|---|---|---|
+| **Claude Desktop** | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) · `%APPDATA%\Claude\claude_desktop_config.json` (Windows) | Claude → Settings → Developer → Edit Config |
+| **Cursor** | `.cursor/mcp.json` in your project root | Settings → MCP → Add new MCP server |
+| **Windsurf** | `~/.codeium/windsurf/mcp_config.json` | Windsurf Settings → Cascade → MCP → Add Server → Add custom server |
+| **VS Code (Copilot)** | `.vscode/mcp.json` | Edit directly (uses `"servers"` instead of `"mcpServers"` — see below) |
 
-</details>
-
----
+> **VS Code note:** VS Code uses a `"servers"` key instead of `"mcpServers"`:
+>
+> ```json
+> {
+>   "servers": {
+>     "reelfarm": {
+>       "command": "uvx",
+>       "args": ["reelfarm-mcp"],
+>       "env": {
+>         "REELFARM_API_KEY": "rf_your_api_key_here"
+>       }
+>     }
+>   }
+> }
+> ```
 
 ### Claude Code (CLI)
 
@@ -97,41 +83,27 @@ Verify it's registered:
 claude mcp list
 ```
 
-<details>
-<summary>Using a local clone instead</summary>
+### Any other MCP client (generic stdio)
+
+The server communicates over **stdio**. Point your MCP client at:
 
 ```bash
-claude mcp add reelfarm \
-  -e REELFARM_API_KEY=rf_your_api_key_here \
-  -- uv run --directory /absolute/path/to/reelfarm-mcp reelfarm-mcp
+REELFARM_API_KEY=rf_your_api_key_here uvx reelfarm-mcp
 ```
 
-</details>
+## Installation (alternative to uvx)
 
----
+If you prefer installing the package directly rather than using `uvx`:
 
-### Cursor
-
-Open **Settings** → **MCP** → **Add new MCP server**, or manually edit `.cursor/mcp.json` in your project root:
-
-```json
-{
-  "mcpServers": {
-    "reelfarm": {
-      "command": "uvx",
-      "args": ["reelfarm-mcp"],
-      "env": {
-        "REELFARM_API_KEY": "rf_your_api_key_here"
-      }
-    }
-  }
-}
+```bash
+pip install reelfarm-mcp
 ```
 
-Reload the window (`Cmd+Shift+P` → **Developer: Reload Window**) and you'll see the tools in the MCP panel.
+Then use `"command": "reelfarm-mcp"` (no args) in any of the configs above instead of `uvx`.
 
-<details>
-<summary>Using a local clone instead</summary>
+## Using a local clone
+
+If you're developing or want to run from source:
 
 ```json
 {
@@ -151,75 +123,13 @@ Reload the window (`Cmd+Shift+P` → **Developer: Reload Window**) and you'll se
 }
 ```
 
-</details>
-
----
-
-### Windsurf
-
-Open **Windsurf Settings** → **Cascade** → **MCP** → **Add Server** → **Add custom server**, or edit `~/.codeium/windsurf/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "reelfarm": {
-      "command": "uvx",
-      "args": ["reelfarm-mcp"],
-      "env": {
-        "REELFARM_API_KEY": "rf_your_api_key_here"
-      }
-    }
-  }
-}
-```
-
----
-
-### VS Code (Copilot)
-
-Add to your user or workspace settings (`.vscode/mcp.json`):
-
-```json
-{
-  "servers": {
-    "reelfarm": {
-      "command": "uvx",
-      "args": ["reelfarm-mcp"],
-      "env": {
-        "REELFARM_API_KEY": "rf_your_api_key_here"
-      }
-    }
-  }
-}
-```
-
----
-
-### Any other MCP client (generic stdio)
-
-The server communicates over **stdio**. Point your MCP client at:
+Or via Claude Code CLI:
 
 ```bash
-REELFARM_API_KEY=rf_your_api_key_here uvx reelfarm-mcp
+claude mcp add reelfarm \
+  -e REELFARM_API_KEY=rf_your_api_key_here \
+  -- uv run --directory /absolute/path/to/reelfarm-mcp reelfarm-mcp
 ```
-
-Or if installed via pip:
-
-```bash
-REELFARM_API_KEY=rf_your_api_key_here reelfarm-mcp
-```
-
----
-
-## Installation (alternative to uvx)
-
-If you prefer installing the package directly rather than using `uvx`:
-
-```bash
-pip install reelfarm-mcp
-```
-
-Then use `"command": "reelfarm-mcp"` (no args) in any of the configs above instead of `uvx`.
 
 ## Usage Examples
 
