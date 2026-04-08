@@ -8,7 +8,6 @@ Rate limit: 20 requests per 60-second sliding window.
 """
 
 import os
-import json
 from typing import Any
 
 import httpx
@@ -20,7 +19,7 @@ from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP(
     "ReelFarm",
-    description="Create slideshows, manage automations, publish to TikTok, and more via the ReelFarm API.",
+    instructions="Create slideshows, manage automations, publish to TikTok, and more via the ReelFarm API.",
 )
 
 BASE_URL = "https://reel.farm/api/v1"
@@ -131,9 +130,15 @@ async def create_slideshow(
     """
     body: dict[str, Any] = {"slides": slides}
     for key in [
-        "title", "aspect_ratio", "text_position", "export_as_video",
-        "duration", "is_bg_overlay_on", "is_bg_overlay_on_hook_image",
-        "background_opacity", "keep_original_aspect_ratio",
+        "title",
+        "aspect_ratio",
+        "text_position",
+        "export_as_video",
+        "duration",
+        "is_bg_overlay_on",
+        "is_bg_overlay_on_hook_image",
+        "background_opacity",
+        "keep_original_aspect_ratio",
     ]:
         val = locals()[key]
         if val is not None:
@@ -189,8 +194,13 @@ async def create_automation(
         "schedule": schedule,
     }
     for key in [
-        "title", "product_id", "slideshow_hooks", "style", "language",
-        "tiktok_post_settings", "image_settings",
+        "title",
+        "product_id",
+        "slideshow_hooks",
+        "style",
+        "language",
+        "tiktok_post_settings",
+        "image_settings",
     ]:
         val = locals()[key]
         if val is not None:
@@ -249,8 +259,13 @@ async def update_automation(
         body["action"] = action
     else:
         for key in [
-            "title", "slideshow_hooks", "style", "language",
-            "tiktok_account_id", "tiktok_post_settings", "product_id",
+            "title",
+            "slideshow_hooks",
+            "style",
+            "language",
+            "tiktok_account_id",
+            "tiktok_post_settings",
+            "product_id",
             "image_settings",
         ]:
             val = locals()[key]
@@ -389,8 +404,15 @@ async def list_videos(
     """
     params: dict[str, Any] = {}
     for key in [
-        "automation_id", "video_type", "status", "finished", "failed",
-        "created_after", "created_before", "limit", "offset",
+        "automation_id",
+        "video_type",
+        "status",
+        "finished",
+        "failed",
+        "created_after",
+        "created_before",
+        "limit",
+        "offset",
     ]:
         val = locals()[key]
         if val is not None:
@@ -488,10 +510,19 @@ async def publish_to_tiktok(
         "tiktok_account_id": tiktok_account_id,
     }
     for key in [
-        "upload_type", "caption", "description", "post_mode", "visibility",
-        "allow_comments", "allow_duet", "allow_stitch", "auto_music",
-        "disclose_video_content", "disclose_brand_organic",
-        "disclose_branded_content", "slideshow_image_urls",
+        "upload_type",
+        "caption",
+        "description",
+        "post_mode",
+        "visibility",
+        "allow_comments",
+        "allow_duet",
+        "allow_stitch",
+        "auto_music",
+        "disclose_video_content",
+        "disclose_brand_organic",
+        "disclose_branded_content",
+        "slideshow_image_urls",
     ]:
         val = locals()[key]
         if val is not None:
@@ -600,8 +631,14 @@ async def search_library(
     """
     params: dict[str, Any] = {}
     for key in [
-        "q", "niche", "product_medium", "region",
-        "audience_region", "sort", "limit", "offset",
+        "q",
+        "niche",
+        "product_medium",
+        "region",
+        "audience_region",
+        "sort",
+        "limit",
+        "offset",
     ]:
         val = locals()[key]
         if val is not None:
