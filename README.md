@@ -47,7 +47,7 @@ Add `"reelfarm"` inside the `"mcpServers"` object:
   "mcpServers": {
     "reelfarm": {
       "command": "uvx",
-      "args": ["reelfarm-mcp-server"],
+      "args": ["reelfarm-mcp"],
       "env": {
         "REELFARM_API_KEY": "rf_your_api_key_here"
       }
@@ -88,7 +88,7 @@ Restart Claude Desktop. You should see a hammer icon in the chat input indicatin
 ```bash
 claude mcp add reelfarm \
   -e REELFARM_API_KEY=rf_your_api_key_here \
-  -- uvx reelfarm-mcp-server
+  -- uvx reelfarm-mcp
 ```
 
 Verify it's registered:
@@ -119,7 +119,7 @@ Open **Settings** → **MCP** → **Add new MCP server**, or manually edit `.cur
   "mcpServers": {
     "reelfarm": {
       "command": "uvx",
-      "args": ["reelfarm-mcp-server"],
+      "args": ["reelfarm-mcp"],
       "env": {
         "REELFARM_API_KEY": "rf_your_api_key_here"
       }
@@ -164,7 +164,7 @@ Open **Windsurf Settings** → **Cascade** → **MCP** → **Add Server** → **
   "mcpServers": {
     "reelfarm": {
       "command": "uvx",
-      "args": ["reelfarm-mcp-server"],
+      "args": ["reelfarm-mcp"],
       "env": {
         "REELFARM_API_KEY": "rf_your_api_key_here"
       }
@@ -184,7 +184,7 @@ Add to your user or workspace settings (`.vscode/mcp.json`):
   "servers": {
     "reelfarm": {
       "command": "uvx",
-      "args": ["reelfarm-mcp-server"],
+      "args": ["reelfarm-mcp"],
       "env": {
         "REELFARM_API_KEY": "rf_your_api_key_here"
       }
@@ -200,7 +200,7 @@ Add to your user or workspace settings (`.vscode/mcp.json`):
 The server communicates over **stdio**. Point your MCP client at:
 
 ```bash
-REELFARM_API_KEY=rf_your_api_key_here uvx reelfarm-mcp-server
+REELFARM_API_KEY=rf_your_api_key_here uvx reelfarm-mcp
 ```
 
 Or if installed via pip:
@@ -216,7 +216,7 @@ REELFARM_API_KEY=rf_your_api_key_here reelfarm-mcp
 If you prefer installing the package directly rather than using `uvx`:
 
 ```bash
-pip install reelfarm-mcp-server
+pip install reelfarm-mcp
 ```
 
 Then use `"command": "reelfarm-mcp"` (no args) in any of the configs above instead of `uvx`.
